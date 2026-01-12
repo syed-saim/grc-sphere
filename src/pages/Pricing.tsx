@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { FadeUp, SlideInLeft, SlideInRight } from "@/components/ScrollAnimations";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const pricingTiers = [
   {
@@ -56,6 +57,7 @@ const pricingTiers = [
 ];
 
 const Pricing = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background bg-gradient-main">
       <Navbar />
@@ -181,6 +183,10 @@ const Pricing = () => {
                         variant={tier.highlighted ? "hero" : "outline"}
                         size="lg"
                         className="w-full group"
+                        onClick={() => {
+                          navigate("/pricing");
+                          window.scrollTo(0, 0);
+                        }}
                       >
                         {tier.cta}
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -349,7 +355,15 @@ const Pricing = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button variant="hero" size="lg" className="group">
+                  <Button 
+                    variant="hero" 
+                    size="lg" 
+                    className="group"
+                    onClick={() => {
+                      navigate("/pricing");
+                      window.scrollTo(0, 0);
+                    }}
+                  >
                     Start Free Trial
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>

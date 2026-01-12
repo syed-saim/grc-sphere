@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { FadeUp, ScaleUp } from "./ScrollAnimations";
+import { useNavigate } from "react-router-dom";
 
 export const CTA = () => {
+  const navigate = useNavigate();
   return (
     <section id="pricing" className="py-24 relative overflow-hidden">
       {/* Background Effects */}
@@ -60,7 +62,15 @@ export const CTA = () => {
                 transition={{ delay: 0.3 }}
               >
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button variant="hero" size="lg" className="group">
+                  <Button 
+                    variant="hero" 
+                    size="lg" 
+                    className="group"
+                    onClick={() => {
+                      navigate("/pricing");
+                      window.scrollTo(0, 0);
+                    }}
+                  >
                     Start Free Trial
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
