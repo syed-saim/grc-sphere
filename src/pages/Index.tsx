@@ -5,6 +5,8 @@ import { Features } from "@/components/Features";
 import { Showcase } from "@/components/Showcase";
 import { Testimonials } from "@/components/Testimonials";
 import { CTA } from "@/components/CTA";
+import { CareerCTA } from "@/components/CareerCTA";
+import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
@@ -17,6 +19,8 @@ const Index = () => {
       <Showcase />
       <Testimonials />
       <CTA />
+      <CareerCTA />
+      <FAQ />
       <Footer />
     </div>
   );
