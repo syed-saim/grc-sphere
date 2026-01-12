@@ -121,7 +121,15 @@ const Career = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button variant="hero" size="lg" className="group">
+              <Button
+                variant="hero"
+                size="lg"
+                className="group"
+                onClick={() => {
+                  const el = document.getElementById("positions");
+                  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+              >
                 Explore Open Positions
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
