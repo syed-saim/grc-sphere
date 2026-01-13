@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { FadeUp, ScaleUp } from "./ScrollAnimations";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const CTA = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <section id="pricing" className="py-24 relative overflow-hidden">
       {/* Background Effects */}
@@ -76,8 +77,28 @@ export const CTA = () => {
                   </Button>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button variant="outline" size="lg">
-                    View Pricing
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={() => {
+                      const scrollToContact = () => {
+                        const contactSection = document.getElementById("contact");
+                        if (contactSection) {
+                          contactSection.scrollIntoView({ behavior: "smooth" });
+                        }
+                      };
+
+                      if (location.pathname === "/") {
+                        // Already on home page, just scroll
+                        scrollToContact();
+                      } else {
+                        // Navigate to home page first, then scroll
+                        navigate("/");
+                        setTimeout(scrollToContact, 300);
+                      }
+                    }}
+                  >
+                    Schedule a Demo
                   </Button>
                 </motion.div>
               </motion.div>

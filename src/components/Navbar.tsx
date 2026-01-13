@@ -7,7 +7,7 @@ import logoIcon from "@/assets/grc-sphere-icon.png";
 
 const navItems = [
   { label: "Features", href: "#features" },
-  { label: "Solutions", href: "#solutions" },
+  { label: "Solutions", href: "/solutions" },
   { label: "Pricing", href: "/pricing" },
   { label: "Career", href: "/career" },
   { label: "Newsroom", href: "/newsroom" },
