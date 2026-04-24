@@ -138,41 +138,45 @@ export const Navbar = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.98 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute left-1/2 top-full mt-4 w-[420px] -translate-x-1/2 rounded-3xl border-gradient bg-gradient-card p-4 shadow-2xl shadow-background/40"
+                    className="absolute left-1/2 top-full mt-4 w-[760px] -translate-x-1/2 rounded-3xl border-gradient bg-gradient-card p-4 shadow-2xl shadow-background/40"
                   >
-                    <div className="rounded-2xl border border-border/30 bg-background/20 p-4">
-                      <p className="text-xs uppercase tracking-[0.2em] text-primary">Industry Solutions</p>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        Explore the sectors called out in the Observeri presentation.
-                      </p>
-                    </div>
+                    <div className="grid grid-cols-[220px_minmax(0,1fr)] gap-4">
+                      <div className="rounded-2xl border border-border/30 bg-background/20 p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-primary">Industry Solutions</p>
+                        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                          Explore the sectors called out in the Observeri presentation.
+                        </p>
+                      </div>
 
-                    <div className="mt-3 grid gap-2">
-                      {industrySolutions.map((industry, index) => (
-                        <motion.div
-                          key={industry.slug}
-                          initial={{ opacity: 0, x: -8 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.04 }}
-                        >
+                      <div>
+                        <div className="grid grid-cols-2 gap-2">
+                          {industrySolutions.map((industry, index) => (
+                            <motion.div
+                              key={industry.slug}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.04 }}
+                            >
+                              <Link
+                                to={`/solutions/${industry.slug}`}
+                                className="flex min-h-[64px] items-start gap-3 rounded-2xl px-4 py-3 text-sm text-muted-foreground transition-colors duration-200 hover:bg-background/30 hover:text-foreground"
+                              >
+                                <industry.icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                                <span className="leading-6">{industry.label}</span>
+                              </Link>
+                            </motion.div>
+                          ))}
+                        </div>
+
+                        <div className="mt-3 border-t border-border/30 pt-3">
                           <Link
-                            to={`/solutions/${industry.slug}`}
-                            className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-muted-foreground transition-colors duration-200 hover:bg-background/30 hover:text-foreground"
+                            to="/solutions"
+                            className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground transition-colors duration-200 hover:bg-background/30"
                           >
-                            <industry.icon className="h-4 w-4 text-primary" />
-                            <span>{industry.label}</span>
+                            View all solutions
                           </Link>
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    <div className="mt-3 border-t border-border/30 pt-3">
-                      <Link
-                        to="/solutions"
-                        className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground transition-colors duration-200 hover:bg-background/30"
-                      >
-                        View all solutions
-                      </Link>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 ) : null}
