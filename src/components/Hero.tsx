@@ -1,11 +1,9 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Lock, CheckCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import logoIcon from "@/assets/grc-sphere-icon.png";
 
 export const Hero = () => {
-  const navigate = useNavigate();
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
       {/* Background Effects */}
@@ -77,71 +75,34 @@ export const Hero = () => {
 
           {/* CTA Buttons */}
           <motion.div 
-            className="flex flex-col sm:flex-row items-center gap-4 mb-6"
+            className="mb-8 flex items-center justify-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <motion.div 
-              whileHover={{ scale: 1.08 }} 
-              whileTap={{ scale: 0.92 }}
-              className="relative"
-            >
-              {/* Glow effect */}
+            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.94 }} className="relative">
               <motion.div
-                className="absolute inset-0 rounded-lg bg-primary blur-xl opacity-50"
-                animate={{ 
-                  opacity: [0.5, 0.8, 0.5],
-                  scale: [1, 1.1, 1]
+                className="absolute inset-0 rounded-lg bg-primary blur-xl opacity-45"
+                animate={{
+                  opacity: [0.45, 0.7, 0.45],
+                  scale: [1, 1.08, 1],
                 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
               />
-              {/* Button */}
-              <motion.div
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Button 
-                  variant="hero" 
-                  size="lg" 
-                  className="group relative z-10 shadow-2xl shadow-primary/50"
-                  onClick={() => {
-                    navigate("/pricing");
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  Start Free Trial
-                  <motion.div
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </motion.div>
-                </Button>
-              </motion.div>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                variant="outline"
+                variant="hero"
                 size="lg"
+                className="group relative z-10 shadow-2xl shadow-primary/40"
                 onClick={() => {
                   const el = document.getElementById("contact");
                   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
               >
                 Book a Demo
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </motion.div>
           </motion.div>
-
-          <motion.p 
-            className="text-sm text-muted-foreground"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            *No credit card required.
-          </motion.p>
 
           {/* Dashboard Preview */}
           <motion.div 

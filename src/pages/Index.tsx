@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -212,6 +213,7 @@ const roadmap = [
 
 const Index = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const scrollToContact = () => {
     const contactSection = document.getElementById("contact");
@@ -219,6 +221,13 @@ const Index = () => {
       contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+
+  React.useEffect(() => {
+    if (searchParams.get("contactForm") === "true") {
+      // Use setTimeout to ensure DOM is ready
+      setTimeout(() => scrollToContact(), 100);
+    }
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-background bg-gradient-main">
@@ -258,7 +267,7 @@ const Index = () => {
                 <div className="mt-10 grid gap-5 md:grid-cols-3">
                   {marketPressures.map((item, index) => (
                     <FadeUp key={item.label} delay={0.1 + index * 0.08}>
-                      <div className="rounded-2xl border-gradient bg-gradient-card p-6">
+                      <div className="flex h-full min-h-[220px] flex-col rounded-2xl border-gradient bg-gradient-card p-6">
                         <p className="text-3xl font-display font-bold text-foreground">{item.value}</p>
                         <p className="mt-2 font-medium text-foreground">{item.label}</p>
                         <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.description}</p>
@@ -770,7 +779,7 @@ const Index = () => {
                     Schedule Briefing
                     <ArrowRight className="transition-transform group-hover:translate-x-1" />
                   </Button>
-                  <Button variant="outline" size="lg" onClick={() => navigate("/pricing")}>
+                  <Button variant="outline" size="lg" onClick={scrollToContact}>
                     Start Proof-of-Value
                   </Button>
                 </div>

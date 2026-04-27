@@ -37,7 +37,7 @@ const Newsroom = () => {
   const navigate = useNavigate();
 
   const handleBuyClick = () => {
-    navigate("/pricing");
+    navigate("/?contactForm=true");
   };
 
   const handleDownloadMediaKit = () => {

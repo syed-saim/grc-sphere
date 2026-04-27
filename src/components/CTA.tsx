@@ -8,7 +8,7 @@ export const CTA = () => {
   const navigate = useNavigate();
   const location = useLocation();
   return (
-    <section id="pricing" className="py-24 relative overflow-hidden">
+    <section id="cta" className="py-24 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-radial" />
       <motion.div 
@@ -68,8 +68,18 @@ export const CTA = () => {
                     size="lg" 
                     className="group"
                     onClick={() => {
-                      navigate("/pricing");
-                      window.scrollTo(0, 0);
+                      const scrollToContact = () => {
+                        const contactSection = document.getElementById("contact");
+                        if (contactSection) {
+                          contactSection.scrollIntoView({ behavior: "smooth" });
+                        }
+                      };
+
+                      if (location.pathname === "/") {
+                        scrollToContact();
+                      } else {
+                        navigate("/?contactForm=true");
+                      }
                     }}
                   >
                     Start Free Trial

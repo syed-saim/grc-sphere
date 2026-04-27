@@ -214,7 +214,7 @@ const IndustrySolution = () => {
                 </p>
                 <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                   <Button asChild variant="hero" size="lg" className="group">
-                    <Link to="/pricing">
+                    <Link to="/?contactForm=true">
                       Start Free Trial
                       <ArrowRight className="transition-transform group-hover:translate-x-1" />
                     </Link>

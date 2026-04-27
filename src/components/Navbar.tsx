@@ -193,7 +193,7 @@ export const Navbar = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Button asChild variant="hero" size="sm">
-                <Link to="/pricing">Get Started</Link>
+                <Link to="/?contactForm=true">Get Started</Link>
               </Button>
             </motion.div>
           </div>
@@ -332,7 +332,7 @@ export const Navbar = () => {
                     transition={{ delay: 0.4 }}
                   >
                     <Button asChild variant="hero">
-                      <Link to="/pricing" onClick={() => setIsOpen(false)}>
+                      <Link to="/?contactForm=true" onClick={() => setIsOpen(false)}>
                         Get Started
                       </Link>
                     </Button>

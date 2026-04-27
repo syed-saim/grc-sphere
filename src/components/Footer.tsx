@@ -7,7 +7,6 @@ import logoIcon from "@/assets/grc-sphere-icon.png";
 const footerLinks = {
   Product: [
     { label: "Features", href: "#features" },
-    { label: "Pricing", href: "/pricing" },
     { label: "Integrations", href: "#" },
     { label: "Changelog", href: "#" },
   ],
