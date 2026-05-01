@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Layers3, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Layers3, ShieldCheck, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
@@ -17,6 +18,28 @@ const platformPillars = [
 ];
 
 const FeaturesPage = () => {
+  const [activeImage, setActiveImage] = useState<{ src: string; title: string } | null>(null);
+
+  useEffect(() => {
+    if (!activeImage) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveImage(null);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeImage]);
+
   return (
     <div className="min-h-screen bg-background bg-gradient-main">
       <Navbar />
@@ -83,7 +106,7 @@ const FeaturesPage = () => {
                     <ShieldCheck className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm uppercase tracking-[0.2em] text-primary">GRC Sphere v2.4</p>
+                    <p className="text-sm uppercase tracking-[0.2em] text-primary">GRC Sphere v1.0</p>
                     <h2 className="text-2xl font-display font-semibold">Intelligence Engine</h2>
                   </div>
                 </div>
@@ -118,54 +141,52 @@ const FeaturesPage = () => {
 
       <section id="module-catalog" className="py-24">
         <div className="container mx-auto px-6">
-          <div className="mb-14 grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:items-end">
-            <div>
-              <FadeUp>
-                <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-primary">Module Catalog</p>
-              </FadeUp>
-              <FadeUp delay={0.08}>
-                <h2 className="text-3xl font-display font-bold md:text-5xl">
-                  The proposal modules, translated into a browsable product page.
-                </h2>
-              </FadeUp>
-            </div>
-            <FadeUp delay={0.14}>
-              <p className="text-base leading-8 text-muted-foreground">
-                Each module below follows the deck language: lifecycle-driven, AI-assisted, measurable, and tied to
-                security, compliance, governance, assets, threats, vulnerabilities, incidents, and executive reporting.
-              </p>
-            </FadeUp>
-          </div>
-
           <StaggerContainer className="grid gap-6 md:grid-cols-2 xl:grid-cols-3" staggerDelay={0.04}>
             {platformModules.map((module) => (
               <StaggerItem key={module.code}>
                 <motion.article
-                  className="group flex h-full flex-col rounded-3xl border-gradient bg-gradient-card p-7 transition-all duration-300"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border-gradient bg-gradient-card transition-all duration-300"
                   whileHover={{ y: -6, scale: 1.01 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="rounded-2xl bg-primary/10 p-3 transition-colors group-hover:bg-primary/20">
-                      <module.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <span className="rounded-full border border-border/40 bg-background/30 px-3 py-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                      {module.code}
-                    </span>
-                  </div>
+                  <button
+                    type="button"
+                    className="relative aspect-[16/10] w-full overflow-hidden border-b border-border/30 bg-background/40 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    onClick={() => setActiveImage({ src: module.image, title: module.title })}
+                    aria-label={`Open ${module.title} image full screen`}
+                  >
+                    <img
+                      src={module.image}
+                      alt={`${module.title} module interface`}
+                      className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
+                  </button>
 
-                  <h3 className="mt-5 text-2xl font-display font-semibold">{module.title}</h3>
-                  <p className="mt-4 flex-1 text-sm leading-7 text-muted-foreground">{module.summary}</p>
-
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {module.lifecycle.map((step) => (
-                      <span
-                        key={step}
-                        className="rounded-full border border-border/40 bg-background/30 px-3 py-1 text-xs text-muted-foreground"
-                      >
-                        {step}
+                  <div className="flex flex-1 flex-col p-7">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="rounded-2xl bg-primary/10 p-3 transition-colors group-hover:bg-primary/20">
+                        <module.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <span className="rounded-full border border-border/40 bg-background/30 px-3 py-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                        {module.code}
                       </span>
-                    ))}
+                    </div>
+
+                    <h3 className="mt-5 text-2xl font-display font-semibold">{module.title}</h3>
+                    <p className="mt-4 flex-1 text-sm leading-7 text-muted-foreground">{module.summary}</p>
+
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {module.lifecycle.map((step) => (
+                        <span
+                          key={step}
+                          className="rounded-full border border-border/40 bg-background/30 px-3 py-1 text-xs text-muted-foreground"
+                        >
+                          {step}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </motion.article>
               </StaggerItem>
@@ -205,6 +226,32 @@ const FeaturesPage = () => {
       </section>
 
       <Footer />
+
+      {activeImage ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 p-4 backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${activeImage.title} full screen image`}
+          onClick={() => setActiveImage(null)}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 rounded-full border border-border/50 bg-card/80 p-3 text-foreground transition-colors hover:bg-card focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            onClick={() => setActiveImage(null)}
+            aria-label="Close full screen image"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          <img
+            src={activeImage.src}
+            alt={`${activeImage.title} module interface`}
+            className="max-h-[92vh] max-w-[96vw] rounded-2xl border border-border/40 bg-background object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
