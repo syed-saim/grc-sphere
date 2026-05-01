@@ -12,6 +12,9 @@ const navItems = [
   { label: "About", href: "/about" },
 ];
 
+const firstNavItems = navItems.slice(0, 1);
+const remainingNavItems = navItems.slice(1);
+
 export const Navbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -66,12 +69,12 @@ export const Navbar = () => {
                 alt="GRC Sphere"
                 className="h-9 w-9 transition-transform duration-300 group-hover:scale-110"
               />
-              <span className="text-xl font-display font-bold text-foreground">GRC Sphere</span>
+              <span className="text-xl font-display font-bold text-foreground">Observeri</span>
             </Link>
           </motion.div>
 
           <div className="hidden items-center gap-8 md:flex">
-            {navItems.map((item, index) =>
+            {firstNavItems.map((item, index) =>
               item.href.startsWith("/") ? (
                 <motion.div
                   key={item.label}
@@ -104,8 +107,8 @@ export const Navbar = () => {
                     initial={{ scaleX: 0 }}
                     whileHover={{ scaleX: 1 }}
                     transition={{ duration: 0.2 }}
-                  />
-                </motion.a>
+                />
+              </motion.a>
               ),
             )}
 
@@ -134,47 +137,49 @@ export const Navbar = () => {
               <AnimatePresence>
                 {isSolutionsOpen ? (
                   <motion.div
-                    initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    initial={{ opacity: 0, x: "-50%", y: 12, scale: 0.98 }}
+                    animate={{ opacity: 1, x: "-50%", y: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: "-50%", y: 8, scale: 0.98 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute left-1/2 top-full mt-4 w-[760px] -translate-x-1/2 rounded-3xl border-gradient bg-gradient-card p-4 shadow-2xl shadow-background/40"
+                    className="fixed left-1/2 top-16 z-50 w-[min(920px,calc(100vw-3rem))] rounded-3xl border-gradient bg-gradient-card p-4 shadow-2xl shadow-background/40"
                   >
-                    <div className="grid grid-cols-[220px_minmax(0,1fr)] gap-4">
-                      <div className="rounded-2xl border border-border/30 bg-background/20 p-4">
-                        <p className="text-xs uppercase tracking-[0.2em] text-primary">Industry Solutions</p>
-                        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                          Explore the sectors called out in the Observeri presentation.
-                        </p>
-                      </div>
-
-                      <div>
-                        <div className="grid grid-cols-2 gap-2">
-                          {industrySolutions.map((industry, index) => (
-                            <motion.div
-                              key={industry.slug}
-                              initial={{ opacity: 0, x: -8 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: index * 0.04 }}
-                            >
-                              <Link
-                                to={`/solutions/${industry.slug}`}
-                                className="flex min-h-[64px] items-start gap-3 rounded-2xl px-4 py-3 text-sm text-muted-foreground transition-colors duration-200 hover:bg-background/30 hover:text-foreground"
-                              >
-                                <industry.icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                                <span className="leading-6">{industry.label}</span>
-                              </Link>
-                            </motion.div>
-                          ))}
+                    <div>
+                      <div className="grid grid-cols-[240px_minmax(0,1fr)] gap-4">
+                        <div className="rounded-2xl border border-border/30 bg-background/20 p-4">
+                          <p className="text-xs uppercase tracking-[0.2em] text-primary">Industry Solutions</p>
+                          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                            Explore the sectors called out in the Observeri presentation.
+                          </p>
                         </div>
 
-                        <div className="mt-3 border-t border-border/30 pt-3">
-                          <Link
-                            to="/solutions"
-                            className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground transition-colors duration-200 hover:bg-background/30"
-                          >
-                            View all solutions
-                          </Link>
+                        <div>
+                          <div className="grid grid-cols-2 gap-2">
+                            {industrySolutions.map((industry, index) => (
+                              <motion.div
+                                key={industry.slug}
+                                initial={{ opacity: 0, x: -8 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.04 }}
+                              >
+                                <Link
+                                  to={`/solutions/${industry.slug}`}
+                                  className="flex min-h-[64px] items-start gap-3 rounded-2xl px-4 py-3 text-sm text-muted-foreground transition-colors duration-200 hover:bg-background/30 hover:text-foreground"
+                                >
+                                  <industry.icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                                  <span className="leading-6">{industry.label}</span>
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </div>
+
+                          <div className="mt-3 border-t border-border/30 pt-3">
+                            <Link
+                              to="/solutions"
+                              className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground transition-colors duration-200 hover:bg-background/30"
+                            >
+                              View all solutions
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -182,6 +187,44 @@ export const Navbar = () => {
                 ) : null}
               </AnimatePresence>
             </motion.div>
+
+            {remainingNavItems.map((item, index) =>
+              item.href.startsWith("/") ? (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (index + firstNavItems.length + 1) * 0.1 + 0.2 }}
+                >
+                  <Link
+                    to={item.href}
+                    className="relative text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                  >
+                    <motion.span whileHover={{ y: -2 }} className="inline-block">
+                      {item.label}
+                    </motion.span>
+                  </Link>
+                </motion.div>
+              ) : (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  className="relative text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (index + firstNavItems.length + 1) * 0.1 + 0.2 }}
+                  whileHover={{ y: -2 }}
+                >
+                  {item.label}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 h-0.5 w-full origin-left bg-primary"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.2 }}
+                  />
+                </motion.a>
+              ),
+            )}
           </div>
 
           <div className="hidden items-center gap-4 md:flex">
@@ -241,6 +284,37 @@ export const Navbar = () => {
             >
               <div className="border-t border-border/50 py-4">
                 <div className="flex flex-col gap-2">
+                  {firstNavItems.map((item, index) =>
+                    item.href.startsWith("/") ? (
+                      <motion.div
+                        key={item.label}
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.1 }}
+                      >
+                        <Link
+                          to={item.href}
+                          className="block rounded-lg px-2 py-3 text-muted-foreground transition-colors hover:bg-muted/30 hover:text-foreground"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                      </motion.div>
+                    ) : (
+                      <motion.a
+                        key={item.label}
+                        href={item.href}
+                        className="rounded-lg px-2 py-3 text-muted-foreground transition-colors hover:bg-muted/30 hover:text-foreground"
+                        onClick={() => setIsOpen(false)}
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.1 }}
+                      >
+                        {item.label}
+                      </motion.a>
+                    ),
+                  )}
+
                   <motion.button
                     type="button"
                     className="flex items-center justify-between rounded-lg px-2 py-3 text-left text-muted-foreground transition-colors hover:bg-muted/30 hover:text-foreground"
@@ -294,13 +368,13 @@ export const Navbar = () => {
                     ) : null}
                   </AnimatePresence>
 
-                  {navItems.map((item, index) =>
+                  {remainingNavItems.map((item, index) =>
                     item.href.startsWith("/") ? (
                       <motion.div
                         key={item.label}
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: index * 0.1 + 0.1 }}
+                        transition={{ delay: (index + firstNavItems.length + 1) * 0.1 + 0.1 }}
                       >
                         <Link
                           to={item.href}
@@ -318,7 +392,7 @@ export const Navbar = () => {
                         onClick={() => setIsOpen(false)}
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: index * 0.1 + 0.1 }}
+                        transition={{ delay: (index + firstNavItems.length + 1) * 0.1 + 0.1 }}
                       >
                         {item.label}
                       </motion.a>
