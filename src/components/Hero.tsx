@@ -46,7 +46,7 @@ export const Hero = () => {
             whileHover={{ scale: 1.05 }}
           >
             <span className="text-sm text-muted-foreground">
-              Introducing GRC Sphere 2.0
+              Introducing GRC Sphere
             </span>
             <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
           </motion.a>
